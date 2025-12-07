@@ -1,15 +1,7 @@
 {
-  "name": "$vendor_name$/$package_name$",
-  "description": "$description$",
-  "minimum-stability": "$stability$",
-  "license": "$license$",
-  "authors": [
-    {
-      "name": "$author$",
-      "email": "$email$"
-    }
-  ],
+  "name": "cinemaabyss/proxy",
+  "description": "Proxy microservice",
   "require": {
-    $END$
+    "flightphp/core": "^3.0"
   }
 }

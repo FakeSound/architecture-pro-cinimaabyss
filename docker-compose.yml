@@ -88,6 +88,8 @@ services:
       context: ./src/microservices/events
       dockerfile: Dockerfile
     container_name: cinemaabyss-events-service
+    volumes:
+      - ./src/microservices/events:/app
     depends_on:
       - postgres
       - kafka
@@ -105,6 +107,8 @@ services:
       context: ./src/microservices/proxy
       dockerfile: Dockerfile
     container_name: cinemaabyss-proxy-service
+    volumes:
+      - ./src/microservices/proxy:/app
     depends_on:
       - monolith
       - movies-service
