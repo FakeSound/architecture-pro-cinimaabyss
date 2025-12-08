@@ -39,6 +39,7 @@ jobs:
           # Wait for services to be ready
           echo "Waiting for services to be ready..."
           sleep 120
+          docker compose up -d
       
       - name: Set up Node.js
         uses: actions/setup-node@v3
