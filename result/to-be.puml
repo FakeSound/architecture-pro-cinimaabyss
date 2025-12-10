@@ -1,0 +1,56 @@
+@startuml
+title CinemaAbyss Container Diagram
+
+top to bottom direction
+
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
+
+Person(mobile, "Mobile App", "Мобильное приложение для просмотра фильмов")
+Person(web, "Web App", "Веб-приложение для просмотра фильмов")
+Person(tv, "TV App", "Приложение для просмотра фильмов на телевизоре")
+
+System(CinemaAbyssSystem, "CinemaAbyss System", "Контент-платформа для просмотра фильмов")
+
+Container_Boundary(CinemaAbyssSystem, "CinemaAbyss System") {
+  Container(ProxyService, "API Gateway", "Kong API Gateway", "API Gateway и так же реализует функционал для постепенного перехода от монолита к микросервисам")
+
+  Container(MoviesService, "Movies Service", "Golang", "Обрабатывает всю функциональность, связанную с фильмами")
+  Container(EventsService, "Events Service", "Golang", "Обрабатывает коммуникацию между сервисами на основе событий с использованием Kafka")
+  Container(UsersService, "User Service", "Golang", "Хранит данные о пользователе")
+  Container(PaymentService, "Payment Service", "Golang", "Управление транзакциями и подписками пользователей")
+
+  Container(Kafka, "Kafka", "Kafka")
+  Container(Database, "Database", "PostgreSQL")
+}
+
+System_Ext(api, "Third-Party API", "External API for temperature data integration")
+
+' Clients
+Rel(mobile, ProxyService, "Uses the system")
+Rel(web, ProxyService, "Uses the system")
+Rel(tv, ProxyService, "Uses the system")
+
+' ProxyService
+Rel(ProxyService, MoviesService, "Forwards requests to")
+Rel(ProxyService, EventsService, "Forwards requests to")
+Rel(ProxyService, UsersService, "Forwards requests to")
+Rel(ProxyService, PaymentService, "Forwards requests to")
+
+' EventsService
+Rel(EventsService, ProxyService, "Requests other MS services via")
+Rel(EventsService, Kafka, "Publishes/Consumes")
+Rel(EventsService, Database, "Reads from and writes to")
+
+' UsersService
+Rel(UsersService, ProxyService, "Requests other MS services via")
+Rel(UsersService, Database, "Reads from and writes to")
+
+' PaymentService
+Rel(PaymentService, ProxyService, "Requests other MS services via")
+Rel(PaymentService, Database, "Reads from and writes to")
+
+' MoviesService
+Rel(MoviesService, ProxyService, "Requests other MS services via")
+Rel(MoviesService, Database, "Reads from and writes to")
+
+@enduml

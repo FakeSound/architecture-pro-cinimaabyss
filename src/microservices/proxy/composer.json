@@ -1,0 +1,8 @@
+{
+  "name": "cinemaabyss/proxy",
+  "description": "Proxy microservice",
+  "require": {
+    "flightphp/core": "^3.0",
+    "guzzlehttp/guzzle": "^7.10"
+  }
+}
