@@ -1,6 +1,6 @@
 {
   "id": "local-env",
-  "name": "Local Environment",
+  "name": "Kuber Environment",
   "values": [
     {
       "key": "baseUrl",
