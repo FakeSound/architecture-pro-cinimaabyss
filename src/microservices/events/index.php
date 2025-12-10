@@ -12,7 +12,7 @@ use Monolog\Logger;
 // -------------------------
 
 $logger = new Logger('events-service');
-$logger->pushHandler(new StreamHandler(__DIR__ . '/events.log', Logger::INFO));
+$logger->pushHandler(new StreamHandler('php://stdout', Logger::INFO));
 Flight::set('logger', $logger);
 
 // Kafka
